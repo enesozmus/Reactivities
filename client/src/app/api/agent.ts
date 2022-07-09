@@ -14,13 +14,11 @@ axios.defaults.baseURL = 'http://localhost:5000/api/'
 
 // loading indicator II
 axios.interceptors.response.use(async response => {
-    try
-    {
+    try {
         await sleep(500);
         return response;
     }
-    catch (error)
-    {
+    catch (error) {
         console.log(error);
         return await Promise.reject(error);
     }
@@ -52,11 +50,18 @@ const requests = {
 
 // for => activities
 const Activities = {
-    //hepsini listele
+    //  hepsini listele
     //list: () => requests.get('activities')
-    list: () => requests.get<Activity[]>('activities')
+    list: () => requests.get<Activity[]>('activities'),
+    //  ID'te göre aktivite getir
+    details: (id: string) => requests.get<Activity>(`activities/${id}`),
+    // aktivite ekleme
+    create: (activity: Activity) => requests.post<void>('activities', activity),
+    // aktivite güncelleme
+    update: (activity: Activity) => requests.put<void>(`activities/${activity.id}`, activity),
+    // aktivite silme
+    delete: (id: string) => requests.del<void>(`activities/${id}`)
 }
-
 
 // standart işlemler
 const agent = { Activities };

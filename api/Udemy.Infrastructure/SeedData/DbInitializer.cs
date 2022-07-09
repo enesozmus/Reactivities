@@ -16,7 +16,7 @@ public class DbInitializer
 
                context?.Database.Migrate();
 
-               #region Categories
+               #region Activities
 
                if (!context.Activities.Any())
                {

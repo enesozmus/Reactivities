@@ -6,9 +6,10 @@ interface Props {
     activity: Activity | undefined;
     closeForm: () => void;
     createOrEdit: (activity: Activity) => void;
+    submitting: boolean;
 }
 
-export default function ActivityForm({ activity: selectedActivity, closeForm, createOrEdit }: Props) {
+export default function ActivityForm({ activity: selectedActivity, closeForm, createOrEdit, submitting }: Props) {
 
     // activity model
     const initialState = selectedActivity ?? {
@@ -33,8 +34,8 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
 
     // Input Change
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const {name, value} = event.target;
-        setActivity({...activity, [name]: value})
+        const { name, value } = event.target;
+        setActivity({ ...activity, [name]: value })
     }
 
     return (
@@ -51,8 +52,16 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
                 <Form.Input placeholder='Şehir' value={activity.city} name='city' onChange={handleInputChange} />
                 <Form.Input placeholder='Mekan' value={activity.venue} name='venue' onChange={handleInputChange} />
 
-                <Button floated='right' positive type="submit" content='Kaydet' />
-                <Button onClick={closeForm} floated='right' type="button" content='İptal Et' />
+                <Button
+                    loading={submitting}
+                    floated='right'
+                    positive type="submit"
+                    content='Kaydet' />
+                <Button
+                    onClick={closeForm}
+                    floated='right'
+                    type="button"
+                    content='İptal Et' />
 
             </Form>
 

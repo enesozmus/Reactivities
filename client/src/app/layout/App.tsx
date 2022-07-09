@@ -20,8 +20,12 @@ function App() {
   // loading indicator III
   const [loading, setLoading] = useState(true);
 
+  // submit
+  const [submitting, setSubmitting] = useState(false);
 
-  // useEffect()
+
+
+  // useEffect() => aktiviteleri listele
   useEffect(() => {
     agent.Activities.list().then(response => {
       // tarih gösterim ayarı
@@ -47,7 +51,7 @@ function App() {
   }
 
 
-  // handle Form Open / Close
+  // Formu Aç veya Kapat
   function handleFormOpen(id?: string) {
     id ? hanldeSelectActivity(id) : hanldeCancelActivity();
     seteditMode(true);
@@ -57,18 +61,43 @@ function App() {
   }
 
 
-  // handle create or edit
+  // Ekle veya Güncelle
   function handleCreateOrEditActivity(activity: Activity) {
-    activity.id
-      ? setActivities([...activities.filter(x => x.id !== activity.id), activity])
-      : setActivities([...activities, { ...activity, id: uuid() }]);
-    seteditMode(false);
-    setSelectedActivity(activity);
+
+    setSubmitting(true);
+
+    if (activity.id)
+    {
+      agent.Activities.update(activity).then(() =>
+      {
+        setActivities([...activities.filter(x => x.id !== activity.id), activity])
+        setSelectedActivity(activity);
+        seteditMode(false);
+        setSubmitting(false);
+      })
+    }
+    else
+    {
+      activity.id = uuid();
+      agent.Activities.create(activity).then(() =>
+      {
+        setActivities([...activities, activity])
+        setSelectedActivity(activity);
+        seteditMode(false);
+        setSubmitting(false);
+      })
+    }
   }
 
-  // handle delete
+  // Sil
   function handleDeleteActivity(id: string) {
-    setActivities([...activities.filter(x => x.id !== id)])
+
+    setSubmitting(true);
+    agent.Activities.delete(id).then(() =>
+    {
+      setActivities([...activities.filter(x => x.id !== id)]);
+      setSubmitting(false);
+    })
   }
 
   // loading indicator V
@@ -94,6 +123,7 @@ function App() {
           closeForm={handleFormClose}
           createOrEditActivity={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting ={submitting}
         />
 
       </Container>
