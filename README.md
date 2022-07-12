@@ -20,7 +20,7 @@
 [Neil Cummings'in](https://www.udemy.com/user/neil-cummings-2/) `"Complete guide to building an app with .Net Core and React"` Udemy Kursu takip edilerek geliştirilen Web Uygulaması
 
 
-<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.1.png" alt="Swagger" title="Swagger">
+<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.png" alt="Swagger" title="Swagger">
 
 <br/>
 
