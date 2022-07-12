@@ -15,7 +15,6 @@
 > * Client tarafında Aktivite entity'si için ilk URL tüketildi ve get, post, put, delete metotları tamamlandı.
 > * Client tarafında loading indicator kullanıldı.
 > * Client tarafında tasarım bazlı iyileştirmeler yapıldı.
-> * Client tarafında routin ayarlamaları  yapıldı.
 
 ## ASP.NET Core WEB API & React 18
 [Neil Cummings'in](https://www.udemy.com/user/neil-cummings-2/) `"Complete guide to building an app with .Net Core and React"` Udemy Kursu takip edilerek geliştirilen Web Uygulaması
