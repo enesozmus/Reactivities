@@ -1,18 +1,25 @@
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Segment, Header, Form, Button } from "semantic-ui-react"
-import { Activity } from "../../../app/models/activity";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useStore } from "../../../app/stores/store";
+import { v4 as uuid } from 'uuid';
 
-interface Props {
-    activity: Activity | undefined;
-    closeForm: () => void;
-    createOrEdit: (activity: Activity) => void;
-    submitting: boolean;
-}
+export default observer(function ActivityForm() {
 
-export default function ActivityForm({ activity: selectedActivity, closeForm, createOrEdit, submitting }: Props) {
+    // history V5
+    const history = useHistory();
 
-    // activity model
-    const initialState = selectedActivity ?? {
+    // mobx
+    const { activityStore } = useStore();
+    const { createActivity, updateActivity, loading, loadActivity, loadingInitial } = activityStore;
+
+    // useParams
+    const { id } = useParams<{ id: string }>();
+
+    const [activity, setActivity] = useState({
         id: '',
         title: '',
         date: '',
@@ -21,15 +28,26 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
         city: '',
         venue: ''
         //isCancelled: '',
-    }
+    });
 
-    const [activity, setActivity] = useState(initialState);
+    // useEffect
+    useEffect(() => {
+        if (id) loadActivity(id).then(activity => setActivity(activity!))
+    }, [id, loadActivity]);
+
 
     // Submit
-
+    // Form Açıldığında Yenisini Ekle ya da var olanı Güncelle
     function handleSubmit() {
-        console.log(activity);
-        createOrEdit(activity);
+        if (activity.id.length === 0) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            }
+            createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`));
+        } else {
+            updateActivity(activity).then(() => history.push(`/activities/${activity.id}`));
+        }
     }
 
     // Input Change
@@ -37,6 +55,8 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
         const { name, value } = event.target;
         setActivity({ ...activity, [name]: value })
     }
+
+    if (loadingInitial) return <LoadingComponent content="Aktivite yükleniyor..." />
 
     return (
         <Segment clearing>
@@ -53,12 +73,13 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
                 <Form.Input placeholder='Mekan' value={activity.venue} name='venue' onChange={handleInputChange} />
 
                 <Button
-                    loading={submitting}
+                    loading={loading}
                     floated='right'
                     positive type="submit"
                     content='Kaydet' />
+
                 <Button
-                    onClick={closeForm}
+                    as={Link} to='/activities'
                     floated='right'
                     type="button"
                     content='İptal Et' />
@@ -67,4 +88,4 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
 
         </Segment>
     )
-}
+})

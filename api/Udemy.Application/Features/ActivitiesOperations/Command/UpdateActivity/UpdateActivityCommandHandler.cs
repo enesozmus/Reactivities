@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Udemy.Application.IRepositories;
+using Udemy.Application.Result;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 
-public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityCommandRequest>
+public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityCommandRequest, Result<Unit>>
 {
      private readonly IActivityWriteRepository _writeRepository;
      private readonly IActivityReadRepository _readRepository;
@@ -17,15 +18,20 @@ public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityComman
           _mapper = mapper;
      }
 
-     public async Task<Unit> Handle(UpdateActivityCommandRequest request, CancellationToken cancellationToken)
+     public async Task<Result<Unit>> Handle(UpdateActivityCommandRequest request, CancellationToken cancellationToken)
      {
-          var updated = await _readRepository.GetByIdAsync(request.Activity.Id);
+          // güncellenek etkinliği getir
+          var activity = await _readRepository.GetByIdAsync(request.Id);
+          if (activity == null) return null;
 
-          _mapper.Map(request.Activity, updated);
-
+          // maple
+          _mapper.Map(request, activity);
           //updated.Title = request.Activity.Title ?? updated.Title;
 
+          // kaydet
           await _writeRepository.SaveAsync();
-          return Unit.Value;
+
+          // gönder
+          return Result<Unit>.Success(Unit.Value);
      }
 }

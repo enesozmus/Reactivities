@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Udemy.Application.IRepositories;
-using Udemy.Domain.Entities;
+using Udemy.Application.Result;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 
-public class GetActivitiesQueryHandler : IRequestHandler<GetActivitiesQueryRequest, IReadOnlyList<GetActivitiesQueryResponse>>
+public class GetActivitiesQueryHandler : IRequestHandler<GetActivitiesQueryRequest, Result<IReadOnlyList<GetActivitiesQueryResponse>>>
 {
      private readonly IActivityReadRepository _readRepository;
      private readonly IMapper _mapper;
@@ -16,9 +16,15 @@ public class GetActivitiesQueryHandler : IRequestHandler<GetActivitiesQueryReque
           _mapper = mapper;
      }
 
-     public async Task<IReadOnlyList<GetActivitiesQueryResponse>> Handle(GetActivitiesQueryRequest request, CancellationToken cancellationToken)
+     public async Task<Result<IReadOnlyList<GetActivitiesQueryResponse>>> Handle(GetActivitiesQueryRequest request, CancellationToken cancellationToken)
      {
+          // istenen etkinlikleri getir
           var activities = await _readRepository.GetAllAsync();
-          return _mapper.Map<IReadOnlyList<GetActivitiesQueryResponse>>(activities);
+
+          // maple
+          var mappedActivities = _mapper.Map<IReadOnlyList<GetActivitiesQueryResponse>>(activities);
+
+          // gönder
+          return Result<IReadOnlyList<GetActivitiesQueryResponse>>.Success(mappedActivities);
      }
 }

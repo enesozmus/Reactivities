@@ -2,6 +2,4 @@
 
 namespace Udemy.Domain.Entities;
 
-public class AppUser : IdentityUser<Guid>
-{
-}
+public class AppUser : IdentityUser<Guid> { }

@@ -1,27 +1,24 @@
-import { Menu, Container, Button } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Container, Menu, Button } from "semantic-ui-react";
 
-interface Props {
-    openForm: () => void;
-}
+export default function NavBar() {
 
-export default function NavBar({ openForm }: Props) {
     return (
-
         <Menu inverted fixed='top'>
             <Container>
+                <Menu.Item as={NavLink} to='/' exact header>
+                    <img src="/assets/logo.png" alt="logo" style={{ marginRight: '7em' }} />
+                    Ana Sayfa
+                </Menu.Item>
 
-                <Menu.Item header>
-                    <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
-
-                </Menu.Item >
-
-                <Menu.Item name='Activities' />
+                <Menu.Item as={NavLink} to='/activities' name="Aktiviteler" />
 
                 <Menu.Item>
-                    <Button onClick={openForm} positive content='Create Activity'></Button>
+                    <Button as={NavLink} to='/createActivity' positive content='Aktivite Ekle'></Button>
                 </Menu.Item>
 
             </Container>
         </Menu>
     )
+
 }

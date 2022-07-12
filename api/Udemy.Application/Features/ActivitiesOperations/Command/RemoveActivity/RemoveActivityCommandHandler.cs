@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Udemy.Application.IRepositories;
+using Udemy.Application.Result;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 
-public class RemoveActivityCommandHandler : IRequestHandler<RemoveActivityCommandRequest>
+public class RemoveActivityCommandHandler : IRequestHandler<RemoveActivityCommandRequest, Result<Unit>>
 {
      private readonly IActivityReadRepository _readRepository;
      private readonly IActivityWriteRepository _writeRepository;
@@ -14,11 +15,19 @@ public class RemoveActivityCommandHandler : IRequestHandler<RemoveActivityComman
           _readRepository = readRepository;
      }
 
-     public async Task<Unit> Handle(RemoveActivityCommandRequest request, CancellationToken cancellationToken)
+     public async Task<Result<Unit>> Handle(RemoveActivityCommandRequest request, CancellationToken cancellationToken)
      {
-          var deleted = await _readRepository.GetByIdAsync(request.Id);
-          await _writeRepository.RemoveAsync(deleted);
+          // silinecek etkinliği getir
+          var activity = await _readRepository.GetByIdAsync(request.Id);
+          if (activity == null) return null;
+
+          // sil
+          await _writeRepository.RemoveAsync(activity);
+
+          // kaydet
           await _writeRepository.SaveAsync();
-          return Unit.Value;
+
+          // gönder
+          return Result<Unit>.Success(Unit.Value);
      }
 }

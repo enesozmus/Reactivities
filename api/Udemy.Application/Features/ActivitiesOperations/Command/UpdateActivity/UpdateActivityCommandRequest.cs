@@ -1,9 +1,15 @@
 ﻿using MediatR;
-using Udemy.Domain.Entities;
+using Udemy.Application.Result;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 
-public class UpdateActivityCommandRequest : IRequest
+public class UpdateActivityCommandRequest : IRequest<Result<Unit>>
 {
-     public Activity Activity { get; set; }
+     public Guid Id { get; set; }
+     public string Title { get; set; }
+     public string Description { get; set; }
+     public string Category { get; set; }
+     public string City { get; set; }
+     public string Venue { get; set; }
+     public bool IsCancelled { get; set; }
 }

@@ -12,7 +12,7 @@ builder.Services.ConfigureApplicationServices();
 #endregion
 
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Udemy.Domain.Entities;
+using Udemy.Application.Result;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 
-public class GetActivityDetailQueryRequest : IRequest<GetActivityDetailQueryResponse>
+public class GetActivityDetailQueryRequest : IRequest<Result<GetActivityDetailQueryResponse>>
 {
      public GetActivityDetailQueryRequest(Guid id)
      {

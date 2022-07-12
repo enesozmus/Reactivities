@@ -13,6 +13,9 @@ public class MappingProfile : Profile
           CreateMap<Activity, GetActivitiesQueryResponse>();
           CreateMap<Activity, GetActivityDetailQueryResponse>();
 
+          CreateMap<Activity, CreateActivityCommandRequest>().ReverseMap();
+          CreateMap<Activity, UpdateActivityCommandRequest>().ReverseMap();
+
           // Test
           CreateMap<Activity, Activity>();
 

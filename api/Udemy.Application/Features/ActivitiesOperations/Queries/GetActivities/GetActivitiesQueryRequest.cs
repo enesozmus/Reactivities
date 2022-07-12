@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Udemy.Domain.Entities;
+using Udemy.Application.Result;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 
-public class GetActivitiesQueryRequest : IRequest<IReadOnlyList<GetActivitiesQueryResponse>>
+public class GetActivitiesQueryRequest : IRequest<Result<IReadOnlyList<GetActivitiesQueryResponse>>>
 {
 }
