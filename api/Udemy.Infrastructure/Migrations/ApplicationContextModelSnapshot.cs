@@ -17,7 +17,7 @@ namespace Udemy.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -133,18 +133,24 @@ namespace Udemy.Infrastructure.Migrations
 
                     b.Property<string>("Category")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<bool>("IsCancelled")
                         .HasColumnType("bit");
@@ -154,11 +160,13 @@ namespace Udemy.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Venue")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -207,11 +215,22 @@ namespace Udemy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -243,6 +262,7 @@ namespace Udemy.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -257,6 +277,44 @@ namespace Udemy.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1d60abe0-b825-464d-9efe-717306c92d1a",
+                            Email = "enes@seeddata.com",
+                            EmailConfirmed = true,
+                            FirstName = "Enes",
+                            LastName = "Ozmus",
+                            LockoutEnabled = false,
+                            NormalizedEmail = " ENES@SEEDDATA.COM",
+                            NormalizedUserName = "ENESOZMUS",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOIQowPq6YibQrsjyyxhIlX6oT4ovIcL9Cfxysa8b2cwRm9+JShYEwdw7QQWo4wlpA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c46c489a-6a41-4c62-9c18-9f94470e03d5",
+                            TwoFactorEnabled = false,
+                            UserName = "enesozmus"
+                        },
+                        new
+                        {
+                            Id = new Guid("7e264482-e439-475c-86c0-dbf687411cc7"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "266957c9-37c6-4955-933b-b37286cb7035",
+                            Email = "umay@seeddata.com",
+                            EmailConfirmed = true,
+                            FirstName = "Umay",
+                            LastName = "Zengin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "UMAY@SEEDDATA.COM",
+                            NormalizedUserName = "UMAYZENGIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAECw9DzjE0YgtwjmiLKcHLGVcU1DCvJwShzWSmRR1WVCvEaek+UZiEzHE7eN9cPLv2w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7ae91d1d-7c4c-46ad-8b2d-4639496019a6",
+                            TwoFactorEnabled = false,
+                            UserName = "umayzengin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

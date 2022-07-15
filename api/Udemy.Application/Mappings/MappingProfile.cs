@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Udemy.Application.Features.ActivitiesOperations;
+using Udemy.Application.Features.AuthenticationOperations;
 using Udemy.Domain.Entities;
 
 namespace Udemy.Application.Mappings;
@@ -16,13 +17,15 @@ public class MappingProfile : Profile
           CreateMap<Activity, CreateActivityCommandRequest>().ReverseMap();
           CreateMap<Activity, UpdateActivityCommandRequest>().ReverseMap();
 
-          // Test
-          CreateMap<Activity, Activity>();
+          #endregion
 
+          #region Users
 
+          CreateMap<AppUser, LoginCommandResponse>().ReverseMap();
+          CreateMap<AppUser, RegisterCommandRequest>().ReverseMap();
+          CreateMap<AppUser, GetCurrentUserQueryResponse>().ReverseMap();
 
-          //CreateMap<Activity, CreateCategoryCommandRequest>().ReverseMap();
-          //CreateMap<Activity, CreateCategoryCommandRequest>().ReverseMap();
+          
 
           #endregion
      }

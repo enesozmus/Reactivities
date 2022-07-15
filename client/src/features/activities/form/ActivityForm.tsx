@@ -1,90 +1,102 @@
-import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
-import { ChangeEvent, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
-import { Segment, Header, Form, Button } from "semantic-ui-react"
-import LoadingComponent from "../../../app/layout/LoadingComponent";
-import { useStore } from "../../../app/stores/store";
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { Button, Header, Segment } from 'semantic-ui-react';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MyTextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
+import { categoryOptions } from '../../../app/common/options/categoryOptions';
+import MyDateInput from '../../../app/common/form/MyDateInput';
+import { Activity } from '../../../app/models/activity';
 
 export default observer(function ActivityForm() {
 
-    // history V5
+    // v5 history
     const history = useHistory();
 
     // mobx
     const { activityStore } = useStore();
     const { createActivity, updateActivity, loading, loadActivity, loadingInitial } = activityStore;
 
-    // useParams
+    // id | useParams
     const { id } = useParams<{ id: string }>();
 
-    const [activity, setActivity] = useState({
+    // model | etkinlik
+    const [activity, setActivity] = useState<Activity>({
         id: '',
         title: '',
-        date: '',
-        description: '',
         category: '',
+        description: '',
+        date: null,
         city: '',
         venue: ''
-        //isCancelled: '',
     });
 
-    // useEffect
+    // doğrulama kuralları
+    const validationSchema = Yup.object({
+        title: Yup.string().required('The activity title is required'),
+        description: Yup.string().required('The activity description is required'),
+        category: Yup.string().required(),
+        date: Yup.string().required('Date is required').nullable(),
+        venue: Yup.string().required(),
+        city: Yup.string().required(),
+    })
+
     useEffect(() => {
         if (id) loadActivity(id).then(activity => setActivity(activity!))
     }, [id, loadActivity]);
 
-
-    // Submit
     // Form Açıldığında Yenisini Ekle ya da var olanı Güncelle
-    function handleSubmit() {
+    function handleFormSubmit(activity: Activity) {
         if (activity.id.length === 0) {
             let newActivity = {
                 ...activity,
                 id: uuid()
-            }
-            createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`));
+            };
+            createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`))
         } else {
-            updateActivity(activity).then(() => history.push(`/activities/${activity.id}`));
+            updateActivity(activity).then(() => history.push(`/activities/${activity.id}`))
         }
     }
 
-    // Input Change
-    function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const { name, value } = event.target;
-        setActivity({ ...activity, [name]: value })
-    }
-
-    if (loadingInitial) return <LoadingComponent content="Aktivite yükleniyor..." />
+    if (loadingInitial) return <LoadingComponent content='Aktivite yükleniyor...' />
 
     return (
         <Segment clearing>
-
-            <Header content='Activity Details' sub color='teal' />
-
-            <Form onSubmit={handleSubmit} autoComplete='off'>
-
-                <Form.Input placeholder='Başlık' value={activity.title} name='title' onChange={handleInputChange} />
-                <Form.TextArea placeholder='Açıklama' value={activity.description} name='description' onChange={handleInputChange} />
-                <Form.Input placeholder='Kategori' value={activity.category} name='category' onChange={handleInputChange} />
-                <Form.Input type="date" placeholder='Tarih' value={activity.date} name='date' onChange={handleInputChange} />
-                <Form.Input placeholder='Şehir' value={activity.city} name='city' onChange={handleInputChange} />
-                <Form.Input placeholder='Mekan' value={activity.venue} name='venue' onChange={handleInputChange} />
-
-                <Button
-                    loading={loading}
-                    floated='right'
-                    positive type="submit"
-                    content='Kaydet' />
-
-                <Button
-                    as={Link} to='/activities'
-                    floated='right'
-                    type="button"
-                    content='İptal Et' />
-
-            </Form>
+            <Header content='Etkinlik Detayları' sub color='teal' />
+            <Formik
+                validationSchema={validationSchema}
+                enableReinitialize
+                initialValues={activity}
+                onSubmit={values => handleFormSubmit(values)}>
+                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                    <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                        <MyTextInput name='title' placeholder='Başlık' />
+                        <MyTextArea rows={3} placeholder='Açıklama' name='description' />
+                        <MySelectInput options={categoryOptions} placeholder='Kategori' name='category' />
+                        <MyDateInput
+                            placeholderText='Tarih'
+                            name='date'
+                            showTimeSelect
+                            timeCaption='time'
+                            dateFormat='MMMM d, yyyy h:mm aa'
+                        />
+                        <Header content='Location Details' sub color='teal' />
+                        <MyTextInput placeholder='Şehir' name='city' />
+                        <MyTextInput placeholder='Mekan' name='venue' />
+                        <Button
+                            disabled={isSubmitting || !dirty || !isValid}
+                            loading={loading} floated='right'
+                            positive type='submit' content='Kaydet' />
+                        <Button as={Link} to='/activities' floated='right' type='button' content='İptal Et' />
+                    </Form>
+                )}
+            </Formik>
 
         </Segment>
     )

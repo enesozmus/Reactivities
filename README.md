@@ -1,11 +1,13 @@
 # Reactivities
 > *  Bir **ASP.NET Core Web API** tüketen ikinci **React** uygulamam
-> *  Tamamlanma Oranı: **%40**
+> *  Tamamlanma Oranı: **%51**
 
 ## İzlence
 > * WebAPI tarafında **Onion Architecture Mimarisi** kullanıldı.
 > * WebAPI tarafında **Optimal C# Generic Repository Design Pattern** kullanıldı.
 > * WebAPI tarafında **MediatR Kütüphanesi** ile **CQRS Pattern** kullanıldı.
+> * WebAPI tarafında kimlik doğrulama ve yetkilendirme işlemleri için **Microsoft.AspNetCore.Identity.EntityFrameworkCore** kütüphanesi kullanıldı.
+> * WebAPI tarafında haberleşen iki veya daha fazla sistem arasında kullanıcı doğrulama, kullanıcı tanıma ve veri bütünlüğünü sağlayabilmek adına **Json Web Tokens** kullanıldı.
 > * WebAPI tarafında mapping işlemleri için **AutoMapper Kütüphanesi** kullanıldı.
 > * WebAPI tarafında doğrulama kuralları için **FluentValidation Kütüphanesi** kullanıldı.
 > * WebAPI tarafında **Http response** durum kodları kullanıldı.

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Udemy.Domain.Configurations;
 using Udemy.Domain.Entities;
 
 namespace Udemy.Infrastructure.Contexts;
@@ -40,6 +41,8 @@ public class ApplicationContext : IdentityDbContext<AppUser, AppRole, Guid>
 
      protected override void OnModelCreating(ModelBuilder modelBuilder)
      {
+          modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+          modelBuilder.ApplyConfiguration(new ActivityConfiguration());
           base.OnModelCreating(modelBuilder);
      }
 

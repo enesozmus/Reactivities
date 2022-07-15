@@ -11,10 +11,11 @@ export default function NavBar() {
                     Ana Sayfa
                 </Menu.Item>
 
-                <Menu.Item as={NavLink} to='/activities' name="Aktiviteler" />
+                <Menu.Item as={NavLink} to='/activities' name="Etkinlikler" />
+                <Menu.Item as={NavLink} to='/errors' name="Hata Yönetim Paneli" />
 
                 <Menu.Item>
-                    <Button as={NavLink} to='/createActivity' positive content='Aktivite Ekle'></Button>
+                    <Button as={NavLink} to='/createActivity' positive content='Etkinlik Ekle'></Button>
                 </Menu.Item>
 
             </Container>

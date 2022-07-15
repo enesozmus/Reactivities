@@ -24,93 +24,103 @@ public class DbInitializer
                     {
                          new Activity
                          {
-                              Title = "Past Activity 1",
-                              CreatedDate = DateTime.Now.AddMonths(-2),
-                              Description = "Activity 2 months ago",
+                              Title = "Etkinlik 1",
+                              Date = new DateTime(2022, 04, 11, 20, 00, 00),
+                              Description = "seeddata 1 | Lorem ipsum dolor sit amet.",
                               Category = "drinks",
                               City = "London",
                               Venue = "Pub",
+                              CreatedDate = DateTime.Now,
                          },
                          new Activity
                          {
-                              Title = "Past Activity 2",
-                              CreatedDate = DateTime.Now.AddMonths(-1),
-                              Description = "Activity 1 month ago",
+                              Title = "Etkinlik 2",
+                              Date = new DateTime(2022, 04, 12, 21, 30, 00),
+                              Description = "seeddata 2 | Lorem ipsum dolor sit amet.",
                               Category = "culture",
                               City = "Paris",
                               Venue = "Louvre",
+                              CreatedDate = DateTime.Now,
                          },
                          new Activity
                          {
-                              Title = "Future Activity 1",
-                              CreatedDate = DateTime.Now.AddMonths(1),
-                              Description = "Activity 1 month in future",
+                              Title = "Etkinlik 3",
+                              Date = new DateTime(2022, 04, 13, 20, 00, 00),
+                              Description = "seeddata 3 | Lorem ipsum dolor sit amet.",
                               Category = "culture",
                               City = "London",
                               Venue = "Natural History Museum",
+                              CreatedDate = DateTime.Now
                           },
                          new Activity
                          {
-                              Title = "Future Activity 2",
-                              CreatedDate = DateTime.Now.AddMonths(2),
-                              Description = "Activity 2 months in future",
+                              Title = "Etkinlik 4",
+                              Date = new DateTime(2022, 04, 14, 21, 30, 00),
+                              Description = "seeddata 4 | Lorem ipsum dolor sit amet.",
                               Category = "music",
                               City = "London",
                               Venue = "O2 Arena",
+                              CreatedDate = DateTime.Now
                          },
                          new Activity
                          {
-                              Title = "Future Activity 3",
-                              CreatedDate = DateTime.Now.AddMonths(3),
-                              Description = "Activity 3 months in future",
+                              Title = "Etkinlik 5",
+                              Date = new DateTime(2022, 04, 15, 20, 00, 00),
+                              Description = "seeddata 5 | Lorem ipsum dolor sit amet.",
                               Category = "drinks",
                               City = "London",
                               Venue = "Another pub",
+                              CreatedDate = DateTime.Now
                          },
                          new Activity
                          {
-                              Title = "Future Activity 4",
-                              CreatedDate = DateTime.Now.AddMonths(4),
-                              Description = "Activity 4 months in future",
+                              Title = "Etkinlik 6",
+                              Date = new DateTime(2022, 04, 16, 21, 30, 00),
+                              Description = "seeddata 6 | Lorem ipsum dolor sit amet.",
                               Category = "drinks",
                               City = "London",
                               Venue = "Yet another pub",
+                              CreatedDate = DateTime.Now
                          },
                          new Activity
                          {
-                              Title = "Future Activity 5",
-                              CreatedDate = DateTime.Now.AddMonths(5),
-                              Description = "Activity 5 months in future",
+                              Title = "Etkinlik 7",
+                              Date = new DateTime(2022, 04, 17, 20, 00, 00),
+                              Description = "seeddata 7 | Lorem ipsum dolor sit amet.",
                               Category = "drinks",
                               City = "London",
                               Venue = "Just another pub",
+                              CreatedDate = DateTime.Now
                          },
                          new Activity
                          {
-                              Title = "Future Activity 6",
-                              CreatedDate = DateTime.Now.AddMonths(6),
-                              Description = "Activity 6 months in future",
+                              Title = "Etkinlik 8",
+                              Date = new DateTime(2022, 04, 18, 21, 30, 00),
+                              Description = "seeddata 8 | Lorem ipsum dolor sit amet.",
                               Category = "music",
                               City = "London",
                               Venue = "Roundhouse Camden",
+                              CreatedDate = DateTime.Now
                          },
                          new Activity
                          {
-                              Title = "Future Activity 7",
-                              CreatedDate = DateTime.Now.AddMonths(7),
-                              Description = "Activity 2 months ago",
+                              Title = "Etkinlik 9",
+                              Date = new DateTime(2022, 04, 19, 20, 00, 00),
+                              Description = "seeddata 9 | Lorem ipsum dolor sit amet.",
                               Category = "travel",
                               City = "London",
                               Venue = "Somewhere on the Thames",
+                              CreatedDate = DateTime.Now
                          },
                          new Activity
                          {
-                              Title = "Future Activity 8",
-                              CreatedDate = DateTime.Now.AddMonths(8),
-                              Description = "Activity 8 months in future",
+                              Title = "Etkinlik 10",
+                              Date = new DateTime(2022, 04, 20, 21, 30, 00),
+                              Description = "seeddata 10 | Lorem ipsum dolor sit amet.",
                               Category = "film",
                               City = "London",
                               Venue = "Cinema",
+                              CreatedDate = DateTime.Now
                          }
                          });
 

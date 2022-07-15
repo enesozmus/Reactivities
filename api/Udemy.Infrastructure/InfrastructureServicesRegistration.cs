@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Udemy.Application.IRepositories;
 using Udemy.Domain.Entities;
 using Udemy.Infrastructure.Contexts;
@@ -27,20 +31,56 @@ public static class InfrastructureServicesRegistration
           #endregion
 
 
-          #region Identity Library
+          #region Microsoft.AspNetCore.Identity.EntityFrameworkCore Library
 
-          services.AddIdentity<AppUser, AppRole>(options =>
+          services.AddIdentityCore<AppUser>(options =>
           {
                options.Password.RequiredLength = 8;
                options.Password.RequireNonAlphanumeric = true;
                options.Password.RequireLowercase = true;
                options.Password.RequireUppercase = true;
                options.Password.RequireDigit = true;
+               options.Password.RequiredUniqueChars = 1;
+
                options.User.RequireUniqueEmail = true;
                options.User.AllowedUserNameCharacters = "abcçdefghiıjklmnoöpqrsştuüvwxyzABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ0123456789-._@+";
 
           })
-             .AddEntityFrameworkStores<ApplicationContext>();
+             .AddEntityFrameworkStores<ApplicationContext>()
+             .AddSignInManager<SignInManager<AppUser>>();
+
+          #endregion
+
+          #region Json Web Token
+
+          var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
+
+          services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                         ValidateIssuerSigningKey = true,
+                         IssuerSigningKey = key,
+                         ValidateIssuer = false,
+                         ValidateAudience = false,
+                         ValidateLifetime = true,
+                         ClockSkew = TimeSpan.Zero
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                         OnMessageReceived = context =>
+                         {
+                              var accessToken = context.Request.Query["access_token"];
+                              var path = context.HttpContext.Request.Path;
+                              if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+                              {
+                                   context.Token = accessToken;
+                              }
+                              return Task.CompletedTask;
+                         }
+                    };
+               });
 
           #endregion
 

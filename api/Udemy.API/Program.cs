@@ -1,3 +1,5 @@
+using Microsoft.OpenApi.Models;
+using Udemy.API.Middleware;
 using Udemy.Application;
 using Udemy.Infrastructure;
 using Udemy.Infrastructure.SeedData;
@@ -14,7 +16,41 @@ builder.Services.ConfigureApplicationServices();
 
 //builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+
+#region Swagger
+
+builder.Services.AddSwaggerGen(c =>
+{
+     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+     {
+          Description = "Jwt auth header",
+          Name = "Authorization",
+          In = ParameterLocation.Header,
+          Type = SecuritySchemeType.ApiKey,
+          Scheme = "Bearer"
+     });
+     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                });
+});
+
+#endregion
 
 #region CORS-1
 
@@ -36,6 +72,12 @@ DbInitializer.Initialize(app);
 
 #endregion
 
+#region ExceptionMiddleware
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+#endregion
+
 if (app.Environment.IsDevelopment())
 {
      app.UseSwagger();
@@ -50,7 +92,12 @@ app.UseCors("CorsPolicy");
 
 #endregion
 
+#region Identity
+
+app.UseAuthentication();
 app.UseAuthorization();
+
+#endregion
 
 app.MapControllers();
 

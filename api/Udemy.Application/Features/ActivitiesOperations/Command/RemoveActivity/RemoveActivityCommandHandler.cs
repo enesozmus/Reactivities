@@ -19,7 +19,7 @@ public class RemoveActivityCommandHandler : IRequestHandler<RemoveActivityComman
      {
           // silinecek etkinliği getir
           var activity = await _readRepository.GetByIdAsync(request.Id);
-          if (activity == null) return null;
+          //if (activity == null) return null;
 
           // sil
           await _writeRepository.RemoveAsync(activity);
