@@ -36,15 +36,15 @@
 
 <br/>
 
-<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.2.png" alt="Login" title="Login">
+<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.22.png" alt="Login" title="Login">
 
 <br/>
 
-<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.3.png" alt="Reactivities" title="Reactivities">
+<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.33.png" alt="Reactivities" title="Reactivities">
 
 <br/>
 
-<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.4.png" alt="ActivityDetail" title="ActivityDetail">
+<img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset1.44.png" alt="ActivityDetail" title="ActivityDetail">
 
 <br/>
 
