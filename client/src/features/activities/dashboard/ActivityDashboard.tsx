@@ -18,7 +18,7 @@ export default observer(function ActivityDashboard() {
     }, [activityRegistry.size, loadActivities])
 
     // loading indicator V
-    if (activityStore.loadingInitial) return <LoadingComponent content='Uygulama yükleniyor...' />
+    if (activityStore.loadingInitial) return <LoadingComponent content='Etkinlikler yükleniyor...' />
 
     return (
         <Grid>

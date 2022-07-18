@@ -12,7 +12,7 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Activity } from '../../../app/models/activity';
+import { Activity, ActivityFormValues } from '../../../app/models/activity';
 
 export default observer(function ActivityForm() {
 
@@ -21,21 +21,13 @@ export default observer(function ActivityForm() {
 
     // mobx
     const { activityStore } = useStore();
-    const { createActivity, updateActivity, loading, loadActivity, loadingInitial } = activityStore;
+    const { createActivity, updateActivity, loadActivity, loadingInitial } = activityStore;
 
     // id | useParams
     const { id } = useParams<{ id: string }>();
 
     // model | etkinlik
-    const [activity, setActivity] = useState<Activity>({
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: null,
-        city: '',
-        venue: ''
-    });
+    const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
 
     // doğrulama kuralları
     const validationSchema = Yup.object({
@@ -48,18 +40,16 @@ export default observer(function ActivityForm() {
     })
 
     useEffect(() => {
-        if (id) loadActivity(id).then(activity => setActivity(activity!))
+        if (id) loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity)))
     }, [id, loadActivity]);
 
     // Form Açıldığında Yenisini Ekle ya da var olanı Güncelle
-    function handleFormSubmit(activity: Activity) {
-        if (activity.id.length === 0) {
-            let newActivity = {
-                ...activity,
-                id: uuid()
-            };
+    function handleFormSubmit(activity: ActivityFormValues) {
+        if (!activity.id) {
+            let newActivity = { ...activity, id: uuid() };
             createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`))
-        } else {
+        }
+        else {
             updateActivity(activity).then(() => history.push(`/activities/${activity.id}`))
         }
     }
@@ -89,11 +79,22 @@ export default observer(function ActivityForm() {
                         <Header content='Location Details' sub color='teal' />
                         <MyTextInput placeholder='Şehir' name='city' />
                         <MyTextInput placeholder='Mekan' name='venue' />
+
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
-                            loading={loading} floated='right'
-                            positive type='submit' content='Kaydet' />
-                        <Button as={Link} to='/activities' floated='right' type='button' content='İptal Et' />
+                            loading={isSubmitting}
+                            floated='right'
+                            positive type='submit'
+                            content='Kaydet'
+                        />
+
+                        <Button
+                            as={Link} to='/activities'
+                            floated='right'
+                            type='button'
+                            content='İptal Et'
+                        />
+
                     </Form>
                 )}
             </Formik>

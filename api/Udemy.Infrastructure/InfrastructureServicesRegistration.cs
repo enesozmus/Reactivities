@@ -1,14 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Udemy.Application.Interfaces;
 using Udemy.Application.IRepositories;
 using Udemy.Domain.Entities;
 using Udemy.Infrastructure.Contexts;
+using Udemy.Infrastructure.Photos;
 using Udemy.Infrastructure.Repositories;
+using Udemy.Infrastructure.Security;
 
 namespace Udemy.Infrastructure;
 
@@ -27,6 +31,9 @@ public static class InfrastructureServicesRegistration
 
           services.AddScoped<IActivityReadRepository, ActivityReadRepository>();
           services.AddScoped<IActivityWriteRepository, ActivityWriteRepository>();
+
+          services.AddScoped<IPhotoReadRepository, PhotoReadRepository>();
+          services.AddScoped<IPhotoWriteRepository, PhotoWriteRepository>();
 
           #endregion
 
@@ -50,6 +57,7 @@ public static class InfrastructureServicesRegistration
              .AddSignInManager<SignInManager<AppUser>>();
 
           #endregion
+
 
           #region Json Web Token
 
@@ -83,6 +91,24 @@ public static class InfrastructureServicesRegistration
                });
 
           #endregion
+
+
+          #region MyRegion
+
+          services.AddAuthorization(options =>
+          {
+               options.AddPolicy("IsActivityHost", policy =>
+               {
+                    policy.Requirements.Add(new IsHostRequirement());
+               });
+          });
+
+          services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+
+          #endregion
+          services.AddScoped<IUserAccessor, UserAccessor>();
+          services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+          services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
           return services;
      }

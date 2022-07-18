@@ -1,9 +1,9 @@
-import { useState, SyntheticEvent } from "react";
-import { Link } from "react-router-dom"
-import { Item, Button, Segment, Icon } from "semantic-ui-react"
-import { Activity } from "../../../app/models/activity"
-import { useStore } from "../../../app/stores/store";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
+import { Activity } from '../../../app/models/activity';
 import {format} from 'date-fns';
+import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 interface Props {
     activity: Activity
@@ -11,38 +11,42 @@ interface Props {
 
 export default function ActivityListItem({ activity }: Props) {
 
-    // mobx
-    const { activityStore } = useStore();
-    const { deleteActivity } = activityStore;
-
-    // loading indicator ayarı
-    const [target, setTarget] = useState('');
-
-    function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
-        setTarget(e.currentTarget.name);
-        deleteActivity(id);
-    }
-
     return (
         <Segment.Group>
-
             <Segment>
-
+                {activity.isCancelled &&
+                    <Label attached='top' color='red' content='Cancelled' style={{textAlign: 'center'}} />
+                }
                 <Item.Group>
                     <Item>
-                        <Item.Image size='tiny' circular src='/assets/user.png' />
-
+                        <Item.Image style={{marginBottom: 3}} size='tiny' circular src='/assets/user.png' />
                         <Item.Content>
-                            <Item.Header as={Link} to={`/activities/${activity.id}`}>{activity.title}</Item.Header>
+
+                            <Item.Header as={Link} to={`/activities/${activity.id}`}>
+                                {activity.title}
+                            </Item.Header>
+
+                            <Item.Description>Ev sahibi: {activity.host?.firstName}</Item.Description>
+
+                            {activity.isHost && (
+                                <Item.Description>
+                                    <Label basic color='orange'>
+                                        Bu etkinliğin ev sahibisiniz.
+                                    </Label>
+                                </Item.Description>
+                            )}
+
+                            {activity.isGoing && !activity.isHost && (
+                                <Item.Description>
+                                    <Label basic color='green'>
+                                        Bu etkinliğe katılıyorsunuz.
+                                    </Label>
+                                </Item.Description>
+                            )}
+
                         </Item.Content>
-
-                        <Item.Description>
-                            Hosted by User(soon)
-                        </Item.Description>
-
                     </Item>
                 </Item.Group>
-
             </Segment>
 
             <Segment>
@@ -53,19 +57,19 @@ export default function ActivityListItem({ activity }: Props) {
             </Segment>
 
             <Segment secondary>
-                Katılımcılar buraya
+                <ActivityListItemAttendee attendees={activity.attendees!} />
             </Segment>
 
             <Segment clearing>
                 <span>{activity.description}</span>
-                <Button
-                    as={Link} to={`/activities/${activity.id}`}
+                <Button 
+                    as={Link}
+                    to={`/activities/${activity.id}`}
                     color='teal'
-                    floated="right"
-                    content="View"
+                    floated='right'
+                    content='View'
                 />
             </Segment>
-
         </Segment.Group>
     )
 }

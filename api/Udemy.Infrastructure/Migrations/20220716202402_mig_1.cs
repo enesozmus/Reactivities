@@ -92,6 +92,31 @@ namespace Udemy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ActivityAttendees",
+                columns: table => new
+                {
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ActivityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsHost = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActivityAttendees", x => new { x.AppUserId, x.ActivityId });
+                    table.ForeignKey(
+                        name: "FK_ActivityAttendees_Activities_ActivityId",
+                        column: x => x.ActivityId,
+                        principalTable: "Activities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ActivityAttendees_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -176,15 +201,44 @@ namespace Udemy.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("7e264482-e439-475c-86c0-dbf687411cc7"), 0, "266957c9-37c6-4955-933b-b37286cb7035", "umay@seeddata.com", true, "Umay", "Zengin", false, null, "UMAY@SEEDDATA.COM", "UMAYZENGIN", "AQAAAAEAACcQAAAAECw9DzjE0YgtwjmiLKcHLGVcU1DCvJwShzWSmRR1WVCvEaek+UZiEzHE7eN9cPLv2w==", null, false, "7ae91d1d-7c4c-46ad-8b2d-4639496019a6", false, "umayzengin" });
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PhotoId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"), 0, "1d60abe0-b825-464d-9efe-717306c92d1a", "enes@seeddata.com", true, "Enes", "Ozmus", false, null, " ENES@SEEDDATA.COM", "ENESOZMUS", "AQAAAAEAACcQAAAAEOIQowPq6YibQrsjyyxhIlX6oT4ovIcL9Cfxysa8b2cwRm9+JShYEwdw7QQWo4wlpA==", null, false, "c46c489a-6a41-4c62-9c18-9f94470e03d5", false, "enesozmus" });
+                values: new object[,]
+                {
+                    { new Guid("0f7d8c5f-95d3-4f6b-8c62-5abdcff93c28"), 0, "e98e2dff-4bdc-46da-9100-feaf61263f22", "umay@seeddata.com", true, "Umay", "Zengin", false, null, "UMAY@SEEDDATA.COM", "UMAYZENGIN", "AQAAAAEAACcQAAAAEGRY4x7/NqCt5Zp9oquAiREIggpEbD8jFD1pvG1MNZxhKZCHO2xxiKydk+wsTM8d2A==", null, false, "3786fc65-814f-4af9-a9aa-1ef19864e8ac", false, "umayzengin" },
+                    { new Guid("8892eb4c-8da6-4151-9a9b-e9987952c2eb"), 0, "5538f6be-351d-4424-8065-eb03296d9d95", "emine@seeddata.com", true, "Emine", "Yıldırım", false, null, "EMINE@SEEDDATA.COM", "EMINEYILDIRIM", "AQAAAAEAACcQAAAAEEbP+IhcIE1HlGrhjZ/VVeS3pR/fBUd6e46+H3b57k/xqzlLQl3kRNdLt28F+t//dg==", null, false, "d4162403-f68d-4d8e-ad23-4f0c0228081d", false, "emineyıldırım" },
+                    { new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"), 0, "82919762-b890-4048-9fc8-754fedfcaea4", "enes@seeddata.com", true, "Enes", "Ozmus", false, null, " ENES@SEEDDATA.COM", "ENESOZMUS", "AQAAAAEAACcQAAAAEO+k6d38mePbeupK3ohHQLAu1SC1FsHPSwrZSLXEDBZW1nGwttbNLUh3qvT9+mzgOQ==", null, false, "4ec6e166-fb49-427f-bb60-fe517b34ee87", false, "enesozmus" },
+                    { new Guid("bd7f1491-2ce9-4cb1-8646-28d896b7974f"), 0, "1b77179e-4ddf-4478-a2a5-7a5b05a76fc2", "selim@seeddata.com", true, "Selim", "Karaca", false, null, "SELIM@SEEDDATA.COM", "SELIMKARACA", "AQAAAAEAACcQAAAAED9AZxwhAym1w2kXtVoY09Yus779exDUpc3NOisfAlWFB0H9ZSNBtDNwnM3JT3bdog==", null, false, "20fa7118-8850-4652-80c6-ea28f4f5f397", false, "selimkaraca" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActivityAttendees_ActivityId",
+                table: "ActivityAttendees",
+                column: "ActivityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -224,12 +278,17 @@ namespace Udemy.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_AppUserId",
+                table: "Photos",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Activities");
+                name: "ActivityAttendees");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -245,6 +304,12 @@ namespace Udemy.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Photos");
+
+            migrationBuilder.DropTable(
+                name: "Activities");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

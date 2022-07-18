@@ -19,11 +19,11 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommandRequest
           RuleFor(p => p.Email).MinimumLength(8).WithMessage("Email alanı 8 karakterden az olmamalı!");
           RuleFor(p => p.Password).MinimumLength(8).WithMessage("Parola alanı 8 karakterden az olmamalı!");
 
-          RuleFor(p => p.FirstName).MaximumLength(15).WithMessage("Ad alanı 15 karakterden fazla olmamalı");
-          RuleFor(p => p.LastName).MaximumLength(15).WithMessage("Soyadı alanı 15 karakterden fazla olmamalı");
-          RuleFor(p => p.UserName).MaximumLength(20).WithMessage("Kullanıcı adı alanı 20 karakterden fazla olmamalı");
-          RuleFor(p => p.Email).MaximumLength(20).WithMessage("Email alanı 20 karakterden fazla olmamalı");
-          RuleFor(p => p.Password).MaximumLength(20).WithMessage("Parola alanı 20 karakterden fazla olmamalı");
+          RuleFor(p => p.FirstName).MaximumLength(15).WithMessage("Ad alanı 15 karakterden fazla olmamalı!");
+          RuleFor(p => p.LastName).MaximumLength(15).WithMessage("Soyadı alanı 15 karakterden fazla olmamalı!");
+          RuleFor(p => p.UserName).MaximumLength(20).WithMessage("Kullanıcı adı alanı 20 karakterden fazla olmamalı!");
+          RuleFor(p => p.Email).MaximumLength(20).WithMessage("Email alanı 20 karakterden fazla olmamalı!");
+          RuleFor(p => p.Password).MaximumLength(20).WithMessage("Parola alanı 20 karakterden fazla olmamalı!");
 
           RuleFor(p => p.Email).EmailAddress().WithMessage("Lütfen bir email formatı kullanınız!");
 

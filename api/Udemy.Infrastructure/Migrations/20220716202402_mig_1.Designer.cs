@@ -12,7 +12,7 @@ using Udemy.Infrastructure.Contexts;
 namespace Udemy.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220714172232_mig_1")]
+    [Migration("20220716202402_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,6 +175,24 @@ namespace Udemy.Infrastructure.Migrations
                     b.ToTable("Activities");
                 });
 
+            modelBuilder.Entity("Udemy.Domain.Entities.ActivityAttendee", b =>
+                {
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsHost")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AppUserId", "ActivityId");
+
+                    b.HasIndex("ActivityId");
+
+                    b.ToTable("ActivityAttendees");
+                });
+
             modelBuilder.Entity("Udemy.Domain.Entities.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -285,7 +303,7 @@ namespace Udemy.Infrastructure.Migrations
                         {
                             Id = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1d60abe0-b825-464d-9efe-717306c92d1a",
+                            ConcurrencyStamp = "82919762-b890-4048-9fc8-754fedfcaea4",
                             Email = "enes@seeddata.com",
                             EmailConfirmed = true,
                             FirstName = "Enes",
@@ -293,17 +311,17 @@ namespace Udemy.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = " ENES@SEEDDATA.COM",
                             NormalizedUserName = "ENESOZMUS",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOIQowPq6YibQrsjyyxhIlX6oT4ovIcL9Cfxysa8b2cwRm9+JShYEwdw7QQWo4wlpA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO+k6d38mePbeupK3ohHQLAu1SC1FsHPSwrZSLXEDBZW1nGwttbNLUh3qvT9+mzgOQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c46c489a-6a41-4c62-9c18-9f94470e03d5",
+                            SecurityStamp = "4ec6e166-fb49-427f-bb60-fe517b34ee87",
                             TwoFactorEnabled = false,
                             UserName = "enesozmus"
                         },
                         new
                         {
-                            Id = new Guid("7e264482-e439-475c-86c0-dbf687411cc7"),
+                            Id = new Guid("0f7d8c5f-95d3-4f6b-8c62-5abdcff93c28"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "266957c9-37c6-4955-933b-b37286cb7035",
+                            ConcurrencyStamp = "e98e2dff-4bdc-46da-9100-feaf61263f22",
                             Email = "umay@seeddata.com",
                             EmailConfirmed = true,
                             FirstName = "Umay",
@@ -311,12 +329,81 @@ namespace Udemy.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "UMAY@SEEDDATA.COM",
                             NormalizedUserName = "UMAYZENGIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECw9DzjE0YgtwjmiLKcHLGVcU1DCvJwShzWSmRR1WVCvEaek+UZiEzHE7eN9cPLv2w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGRY4x7/NqCt5Zp9oquAiREIggpEbD8jFD1pvG1MNZxhKZCHO2xxiKydk+wsTM8d2A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7ae91d1d-7c4c-46ad-8b2d-4639496019a6",
+                            SecurityStamp = "3786fc65-814f-4af9-a9aa-1ef19864e8ac",
                             TwoFactorEnabled = false,
                             UserName = "umayzengin"
+                        },
+                        new
+                        {
+                            Id = new Guid("bd7f1491-2ce9-4cb1-8646-28d896b7974f"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1b77179e-4ddf-4478-a2a5-7a5b05a76fc2",
+                            Email = "selim@seeddata.com",
+                            EmailConfirmed = true,
+                            FirstName = "Selim",
+                            LastName = "Karaca",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SELIM@SEEDDATA.COM",
+                            NormalizedUserName = "SELIMKARACA",
+                            PasswordHash = "AQAAAAEAACcQAAAAED9AZxwhAym1w2kXtVoY09Yus779exDUpc3NOisfAlWFB0H9ZSNBtDNwnM3JT3bdog==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "20fa7118-8850-4652-80c6-ea28f4f5f397",
+                            TwoFactorEnabled = false,
+                            UserName = "selimkaraca"
+                        },
+                        new
+                        {
+                            Id = new Guid("8892eb4c-8da6-4151-9a9b-e9987952c2eb"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5538f6be-351d-4424-8065-eb03296d9d95",
+                            Email = "emine@seeddata.com",
+                            EmailConfirmed = true,
+                            FirstName = "Emine",
+                            LastName = "Yıldırım",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMINE@SEEDDATA.COM",
+                            NormalizedUserName = "EMINEYILDIRIM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEbP+IhcIE1HlGrhjZ/VVeS3pR/fBUd6e46+H3b57k/xqzlLQl3kRNdLt28F+t//dg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d4162403-f68d-4d8e-ad23-4f0c0228081d",
+                            TwoFactorEnabled = false,
+                            UserName = "emineyıldırım"
                         });
+                });
+
+            modelBuilder.Entity("Udemy.Domain.Entities.Photo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhotoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -368,6 +455,48 @@ namespace Udemy.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Udemy.Domain.Entities.ActivityAttendee", b =>
+                {
+                    b.HasOne("Udemy.Domain.Entities.Activity", "Activity")
+                        .WithMany("Attendees")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Udemy.Domain.Entities.AppUser", "AppUser")
+                        .WithMany("Activities")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Udemy.Domain.Entities.Photo", b =>
+                {
+                    b.HasOne("Udemy.Domain.Entities.AppUser", "AppUser")
+                        .WithMany("Photos")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Udemy.Domain.Entities.Activity", b =>
+                {
+                    b.Navigation("Attendees");
+                });
+
+            modelBuilder.Entity("Udemy.Domain.Entities.AppUser", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

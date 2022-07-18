@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Udemy.Application.Features.AuthenticationOperations;
 using Udemy.Domain.Entities;
 
 namespace Udemy.API.Controllers;
-
 
 public class AuthController : BaseController
 {
@@ -28,7 +28,21 @@ public class AuthController : BaseController
 
      [AllowAnonymous]
      [HttpPost("register")]
-     public async Task<IActionResult> Register(RegisterCommandRequest request) => Ok(await Mediator.Send(request));
+     public async Task<IActionResult> Register(RegisterCommandRequest request)
+     {
+          if (await _userManager.Users.AnyAsync(x => x.Email == request.Email))
+          {
+               ModelState.AddModelError("email", "Email taken");
+               return ValidationProblem();
+          }
+          if (await _userManager.Users.AnyAsync(x => x.UserName == request.UserName))
+          {
+               ModelState.AddModelError("username", "Username taken");
+               return ValidationProblem();
+          }
+
+          return Ok(await Mediator.Send(request));
+     }
 
      [Authorize]
      [HttpGet]

@@ -27,6 +27,8 @@ public static class ApplicationServicesRegistration
                                // Automatic registration of validators in assembly
                                options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                           });
+                          //.AddNewtonsoftJson(options =>
+                          //options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
           services.AddScoped<IAuthentication, AuthenticationService>();
 

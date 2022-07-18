@@ -19,12 +19,13 @@ public class GetActivitiesQueryHandler : IRequestHandler<GetActivitiesQueryReque
      public async Task<Result<IReadOnlyList<GetActivitiesQueryResponse>>> Handle(GetActivitiesQueryRequest request, CancellationToken cancellationToken)
      {
           // istenen etkinlikleri getir
-          var activities = await _readRepository.GetAllAsync();
+          var activities = await _readRepository.GetAllActivitiesForIndex();
+          //var activities = await _readRepository.GetAllAsync();
 
           // maple
-          var mappedActivities = _mapper.Map<IReadOnlyList<GetActivitiesQueryResponse>>(activities);
+          //var activitiesToReturn = _mapper.Map<IReadOnlyList<GetActivitiesQueryResponse>>(activities);
 
           // gönder
-          return Result<IReadOnlyList<GetActivitiesQueryResponse>>.Success(mappedActivities);
+          return Result<IReadOnlyList<GetActivitiesQueryResponse>>.Success(activities);
      }
 }

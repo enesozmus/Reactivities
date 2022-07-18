@@ -27,6 +27,7 @@ internal class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, 
           {
                response.IsSuccess = true;
                response.Message = "Kullanıcı başarıyla oluşturulmuştur.";
+               response.UserName = userEntity.UserName;
                return response;
           }
           else

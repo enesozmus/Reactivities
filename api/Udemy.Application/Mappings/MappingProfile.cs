@@ -9,23 +9,33 @@ public class MappingProfile : Profile
 {
      public MappingProfile()
      {
-          #region Activities
+          #region Katılımcılar
 
-          CreateMap<Activity, GetActivitiesQueryResponse>();
-          CreateMap<Activity, GetActivityDetailQueryResponse>();
+          CreateMap<ActivityAttendee, Profiles.Profile>()
+               .ForMember(d => d.FirstName, o => o.MapFrom(s => s.AppUser.FirstName))
+               .ForMember(d => d.LastName, o => o.MapFrom(s => s.AppUser.LastName))
+               .ForMember(d => d.UserName, o => o.MapFrom(s => s.AppUser.UserName));
+
+          #endregion
+
+          #region Etkinlikler
+
+          CreateMap<Activity, GetActivitiesQueryResponse>()
+               .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
+
+          CreateMap<Activity, GetActivityDetailQueryResponse>()
+               .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
 
           CreateMap<Activity, CreateActivityCommandRequest>().ReverseMap();
           CreateMap<Activity, UpdateActivityCommandRequest>().ReverseMap();
 
           #endregion
 
-          #region Users
+          #region Kullanıcılar
 
           CreateMap<AppUser, LoginCommandResponse>().ReverseMap();
           CreateMap<AppUser, RegisterCommandRequest>().ReverseMap();
           CreateMap<AppUser, GetCurrentUserQueryResponse>().ReverseMap();
-
-          
 
           #endregion
      }

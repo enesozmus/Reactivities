@@ -1,7 +1,8 @@
 import axios, { Axios, AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
-import { Activity } from "../models/activity";
+import { Activity, ActivityFormValues } from "../models/activity";
+import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 
 
@@ -14,6 +15,13 @@ const sleep = (delay: number) => {
 
 // Ana URL
 axios.defaults.baseURL = 'http://localhost:5000/api/'
+
+// token
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token) config.headers!.Authorization = `Bearer ${token}`
+    return config;
+})
 
 // loading indicator II
 axios.interceptors.response.use(async response => {
@@ -91,14 +99,22 @@ const Activities = {
     //  ID'te göre aktivite getir
     details: (id: string) => requests.get<Activity>(`activities/${id}`),
     // aktivite ekleme
-    create: (activity: Activity) => axios.post<void>('activities', activity),
+    create: (activity: ActivityFormValues) => requests.post<void>('activities', activity),
     // aktivite güncelleme
-    update: (activity: Activity) => axios.put<void>(`activities/${activity.id}`, activity),
+    update: (activity: ActivityFormValues) => requests.put<void>(`activities/${activity.id}`, activity),
     // aktivite silme
-    delete: (id: string) => axios.delete<void>(`activities/${id}`)
+    delete: (id: string) => requests.del<void>(`activities/${id}`),
+    attend: (id: string) => requests.post<void>(`activities/${id}/attend`, {})
+}
+
+// for => auth
+const Account = {
+    current: () => requests.get<User>('auth'),
+    login: (user: UserFormValues) => requests.post<User>('auth/login', user),
+    register: (user: UserFormValues) => requests.post<User>('auth/register', user)
 }
 
 // standart işlemler
-const agent = { Activities };
+const agent = { Activities, Account };
 
 export default agent;

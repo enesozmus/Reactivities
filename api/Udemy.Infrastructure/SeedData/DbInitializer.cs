@@ -31,6 +31,29 @@ public class DbInitializer
                               City = "London",
                               Venue = "Pub",
                               CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   },
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("0f7d8c5f-95d3-4f6b-8c62-5abdcff93c28"),
+                                        IsHost = false
+                                   },
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("bd7f1491-2ce9-4cb1-8646-28d896b7974f"),
+                                        IsHost = false
+                                   },
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("8892eb4c-8da6-4151-9a9b-e9987952c2eb"),
+                                        IsHost = false
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -41,6 +64,24 @@ public class DbInitializer
                               City = "Paris",
                               Venue = "Louvre",
                               CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("0f7d8c5f-95d3-4f6b-8c62-5abdcff93c28"),
+                                        IsHost = true
+                                   },
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("bd7f1491-2ce9-4cb1-8646-28d896b7974f"),
+                                        IsHost = false
+                                   },
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("8892eb4c-8da6-4151-9a9b-e9987952c2eb"),
+                                        IsHost = false
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -50,7 +91,15 @@ public class DbInitializer
                               Category = "culture",
                               City = "London",
                               Venue = "Natural History Museum",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                           },
                          new Activity
                          {
@@ -60,7 +109,15 @@ public class DbInitializer
                               Category = "music",
                               City = "London",
                               Venue = "O2 Arena",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -70,7 +127,15 @@ public class DbInitializer
                               Category = "drinks",
                               City = "London",
                               Venue = "Another pub",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -80,7 +145,15 @@ public class DbInitializer
                               Category = "drinks",
                               City = "London",
                               Venue = "Yet another pub",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -90,7 +163,15 @@ public class DbInitializer
                               Category = "drinks",
                               City = "London",
                               Venue = "Just another pub",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -100,7 +181,15 @@ public class DbInitializer
                               Category = "music",
                               City = "London",
                               Venue = "Roundhouse Camden",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -110,7 +199,15 @@ public class DbInitializer
                               Category = "travel",
                               City = "London",
                               Venue = "Somewhere on the Thames",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          },
                          new Activity
                          {
@@ -120,7 +217,15 @@ public class DbInitializer
                               Category = "film",
                               City = "London",
                               Venue = "Cinema",
-                              CreatedDate = DateTime.Now
+                              CreatedDate = DateTime.Now,
+                              Attendees = new List<ActivityAttendee>
+                              {
+                                   new ActivityAttendee
+                                   {
+                                        AppUserId = new Guid("b01b3c37-5b75-47e4-8a7d-da6815e412d7"),
+                                        IsHost = true
+                                   }
+                              }
                          }
                          });
 

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Udemy.Application.Result;
+using Udemy.Domain.Entities;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 

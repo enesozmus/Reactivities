@@ -19,12 +19,12 @@ public class GetActivityDetailQueryHandler : IRequestHandler<GetActivityDetailQu
      public async Task<Result<GetActivityDetailQueryResponse>> Handle(GetActivityDetailQueryRequest request, CancellationToken cancellationToken)
      {
           // istenen etkinliği getir
-          var activity = await _readRepository.GetByIdAsync(request.Id);
+          var activity = await _readRepository.GetActivityDetails(request.Id);
 
           // maple
-          var mappedActivity = _mapper.Map<GetActivityDetailQueryResponse>(activity);
+          //var mappedActivity = _mapper.Map<GetActivityDetailQueryResponse>(activity);
 
           // gönder
-          return Result<GetActivityDetailQueryResponse>.Success(mappedActivity);
+          return Result<GetActivityDetailQueryResponse>.Success(activity);
      }
 }

@@ -1,4 +1,6 @@
-﻿namespace Udemy.Application.Features.ActivitiesOperations;
+﻿using Udemy.Application.Profiles;
+
+namespace Udemy.Application.Features.ActivitiesOperations;
 
 public class GetActivitiesQueryResponse
 {
@@ -10,4 +12,7 @@ public class GetActivitiesQueryResponse
      public string City { get; set; }
      public string Venue { get; set; }
      public bool IsCancelled { get; set; }
+
+     public string? HostUsername { get; set; }
+     public ICollection<Profile> Attendees { get; set; }
 }
