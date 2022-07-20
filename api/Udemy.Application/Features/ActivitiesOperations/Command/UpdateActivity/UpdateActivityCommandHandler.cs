@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Udemy.Application.IRepositories;
-using Udemy.Application.Result;
+using Udemy.Application.Results;
 
 namespace Udemy.Application.Features.ActivitiesOperations;
 

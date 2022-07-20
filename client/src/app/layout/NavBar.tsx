@@ -26,7 +26,7 @@ export default observer(function NavBar() {
 
                     <Dropdown pointing='top left' text={user?.userName}>
                         <Dropdown.Menu>
-                            <Dropdown.Item as={Link} to={`/profile/${user?.userName}`}
+                            <Dropdown.Item as={Link} to={`/profiles/${user?.userName}`}
                                 text='Profilim' icon='user' />
                             <Dropdown.Item onClick={logout} text='Çıkış Yap' icon='power' />
                         </Dropdown.Menu>

@@ -1,4 +1,4 @@
-﻿namespace Udemy.Application.Photos;
+﻿namespace Udemy.Application.Results;
 
 public class PhotoUploadResult
 {

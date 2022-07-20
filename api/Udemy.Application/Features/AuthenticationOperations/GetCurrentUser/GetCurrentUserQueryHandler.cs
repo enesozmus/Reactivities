@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Udemy.Domain.Entities;
 
 namespace Udemy.Application.Features.AuthenticationOperations;
@@ -21,7 +22,13 @@ public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQueryReq
 
      public async Task<GetCurrentUserQueryResponse> Handle(GetCurrentUserQueryRequest request, CancellationToken cancellationToken)
      {
-          var user = await _userManager.FindByNameAsync(_httpContextAccessor.HttpContext.User.Identity?.Name);
+          //var user = await _userManager.FindByNameAsync(_httpContextAccessor.HttpContext.User.Identity?.Name);
+
+          var username = _httpContextAccessor.HttpContext.User.Identity?.Name;
+          var user = await _userManager
+               .Users
+               .Include(x => x.Photos)
+               .FirstOrDefaultAsync(x => x.UserName == username);
 
           var response = _mapper.Map<GetCurrentUserQueryResponse>(user);
           return response;

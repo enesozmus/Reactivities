@@ -1,4 +1,4 @@
-﻿namespace Udemy.Application.Result;
+﻿namespace Udemy.Application.Results;
 
 public class Result<T>
 {

@@ -13,5 +13,14 @@ public class ActivityConfiguration : IEntityTypeConfiguration<Activity>
           builder.Property(x => x.Description).HasMaxLength(80).IsRequired();
           builder.Property(x => x.City).HasMaxLength(30).IsRequired();
           builder.Property(x => x.Venue).HasMaxLength(30).IsRequired();
+
+          #region ForeingKey
+
+          builder.HasMany(x => x.Comments)
+                    .WithOne(x => x.Activity)
+                    .HasForeignKey(x => x.AppUserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+          #endregion
      }
 }

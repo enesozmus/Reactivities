@@ -2,8 +2,8 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
-using Udemy.Application.Photos;
 using Microsoft.AspNetCore.Http;
+using Udemy.Application.Results;
 
 namespace Udemy.Infrastructure.Photos;
 

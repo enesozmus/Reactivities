@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Udemy.Application.Photos;
+using Udemy.Application.Results;
 
 namespace Udemy.Application.Interfaces;
 

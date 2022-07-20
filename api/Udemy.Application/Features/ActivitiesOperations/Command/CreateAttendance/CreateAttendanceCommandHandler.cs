@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Udemy.Application.IRepositories;
-using Udemy.Application.Result;
+using Udemy.Application.Results;
 using Udemy.Domain.Entities;
 
 namespace Udemy.Application.Features.ActivitiesOperations;

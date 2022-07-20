@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Udemy.Application.Features.AuthenticationOperations;
-using Udemy.Application.Result;
 using Udemy.Domain.Entities;
 
 namespace Udemy.Application.Test;
@@ -25,7 +25,10 @@ public class AuthenticationService : IAuthentication
 
      public async Task<LoginCommandResponse> LoginAsync(LoginCommandRequest request)
      {
-          var user = _userManager.Users.SingleOrDefault(x => x.Email == request.Email);
+          var user = await _userManager
+               .Users
+               .Include(x => x.Photos)
+               .SingleOrDefaultAsync(x => x.Email == request.Email);
 
           if (user == null)
                return new LoginCommandResponse { Errors = new[] { "Email veya şifre hatalı!" } };

@@ -2,6 +2,7 @@ import axios, { Axios, AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { Activity, ActivityFormValues } from "../models/activity";
+import { Photo, Profile } from "../models/profile";
 import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 
@@ -35,8 +36,7 @@ axios.interceptors.response.use(async response => {
 
     switch (status) {
         case 400:
-            if(typeof data === 'string')
-            {
+            if (typeof data === 'string') {
                 toast.error(data);
             }
             if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
@@ -107,14 +107,35 @@ const Activities = {
     attend: (id: string) => requests.post<void>(`activities/${id}/attend`, {})
 }
 
-// for => auth
+// for => oturum açma kayıt işlemleri
 const Account = {
     current: () => requests.get<User>('auth'),
     login: (user: UserFormValues) => requests.post<User>('auth/login', user),
     register: (user: UserFormValues) => requests.post<User>('auth/register', user)
 }
 
+// for => profil işlemleri
+
+const Profiles = {
+    // fotoğraflarıyla birlikte kullanıcıyı getir
+    get: (username: string) => requests.get<Profile>(`profiles/${username}`),
+    // fotoğraf yükle
+    uploadPhoto: (file: Blob) => {
+        let formData = new FormData();
+        formData.append('File', file);
+        return axios.post<Photo>('photos', formData, {
+            headers: { 'Content-type': 'multipart/form-data' }
+        })
+    },
+    // birincil fotoğrafı ayarla
+    setMainPhoto: (id: string) => requests.post(`photos/${id}/setMain`, {}),
+    // fotoğrafı sil
+    deletePhoto: (id: string) => requests.del(`photos/${id}`),
+    // profili güncelle
+    updateProfile: (profile: Partial<Profile>) => requests.put(`profiles`, profile)
+}
+
 // standart işlemler
-const agent = { Activities, Account };
+const agent = { Activities, Account, Profiles };
 
 export default agent;

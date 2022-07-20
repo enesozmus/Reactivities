@@ -12,5 +12,6 @@ public class Activity : BaseEntity
 
      // many to many
      public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
-     //public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+     // one to many
+     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

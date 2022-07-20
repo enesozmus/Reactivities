@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Udemy.Application.Result;
+using Udemy.Application.Results;
 
 namespace Udemy.API.Controllers;
 

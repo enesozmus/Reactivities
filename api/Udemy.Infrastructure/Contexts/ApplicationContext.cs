@@ -14,6 +14,7 @@ public class ApplicationContext : IdentityDbContext<AppUser, AppRole, Guid>
      public DbSet<Activity> Activities { get; set; }
      public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
      public DbSet<Photo> Photos { get; set; }
+     public DbSet<Comment> Comments { get; set; }
 
      #endregion
 
@@ -45,6 +46,7 @@ public class ApplicationContext : IdentityDbContext<AppUser, AppRole, Guid>
      {
           modelBuilder.ApplyConfiguration(new AppUserConfiguration());
           modelBuilder.ApplyConfiguration(new ActivityConfiguration());
+          modelBuilder.ApplyConfiguration(new PhotoConfiguration());
 
           #region many to many
 

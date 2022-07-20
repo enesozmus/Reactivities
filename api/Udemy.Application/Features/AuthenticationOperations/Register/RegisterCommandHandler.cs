@@ -19,6 +19,7 @@ internal class RegisterCommandHandler : IRequestHandler<RegisterCommandRequest, 
      public async Task<RegisterCommandResponse> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
      {
           var userEntity = _mapper.Map<AppUser>(request);
+
           var result = await _userManager.CreateAsync(userEntity, request.Password);
 
           RegisterCommandResponse response = new();
