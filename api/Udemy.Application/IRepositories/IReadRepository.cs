@@ -10,6 +10,9 @@ public interface IReadRepository<T> : IRepository<T> where T : BaseEntity
      Task<T> GetFirstAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includes);
      Task<IReadOnlyList<T>> GetAllAsync();
      Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null);
+     #region Multiple Keys
+     Task<T> GetForMultipleKeys(params object[] keyValues);
+     #endregion
      Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includes);
      Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
                                      Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,

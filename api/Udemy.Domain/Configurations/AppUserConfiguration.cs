@@ -13,15 +13,14 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
           builder.Property(x => x.LastName).IsRequired().HasMaxLength(15);
           builder.Property(x => x.Email).IsRequired().HasMaxLength(20);
           builder.Property(x => x.UserName).IsRequired().HasMaxLength(20);
-          builder.Property(x => x.DisplayName).HasMaxLength(40);
           builder.Property(x => x.Bio).HasMaxLength(300);
 
           #region ForeingKey
 
           builder.HasMany(x => x.Photos)
-                    .WithOne(x => x.AppUser)
-                    .HasForeignKey(x => x.AppUserId)
-                    .OnDelete(DeleteBehavior.Cascade);
+               .WithOne(x => x.AppUser)
+               .HasForeignKey(x => x.AppUserId)
+               .OnDelete(DeleteBehavior.NoAction);
 
           #endregion
 

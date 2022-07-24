@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Udemy.Application.Interfaces;
 using Udemy.Application.Test;
 
 namespace Udemy.Application;

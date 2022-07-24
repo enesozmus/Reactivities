@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Udemy.Application.Test;
+using Udemy.Application.Interfaces;
 
 namespace Udemy.Application.Features.AuthenticationOperations;
 

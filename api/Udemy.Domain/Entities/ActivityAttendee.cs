@@ -1,6 +1,6 @@
 ﻿namespace Udemy.Domain.Entities;
 
-public class ActivityAttendee
+public class ActivityAttendee : BaseEntity
 {
      public Guid AppUserId { get; set; }
      public AppUser AppUser { get; set; }

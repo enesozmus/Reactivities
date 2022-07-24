@@ -11,4 +11,7 @@ public class ProfilesController : BaseController
      [HttpPut]
      public async Task<IActionResult> Edit(EditProfilesQueryRequest request) => HandleResult(await Mediator.Send(request));
 
+     [HttpGet("{username}/activities")]
+     public async Task<IActionResult> GetUserActivities(string username, string predicate) => HandleResult(await Mediator.Send(new GetUserActivitiesQueryRequest { Username = username, Predicate = predicate }));
+
 }

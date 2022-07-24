@@ -31,7 +31,6 @@ public class CreateActivityCommandHandler : IRequestHandler<CreateActivityComman
           // kullanıcıyı getir
           var appUser = await _userManager.FindByNameAsync(_httpContextAccessor.HttpContext.User.Identity?.Name);
           var activityMap = _mapper.Map<Activity>(request);
-          var testUserName = _userAccessor.GetUsername();
 
           if (appUser.UserName == _userAccessor.GetUsername())
           {

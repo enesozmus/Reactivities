@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Udemy.Application.Interfaces;
@@ -34,6 +37,15 @@ public static class InfrastructureServicesRegistration
 
           services.AddScoped<IPhotoReadRepository, PhotoReadRepository>();
           services.AddScoped<IPhotoWriteRepository, PhotoWriteRepository>();
+
+          services.AddScoped<ICommentReadRepository, CommentReadRepository>();
+          services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
+
+          services.AddScoped<IUserFollowingReadRepository, UserFollowingReadRepository>();
+          services.AddScoped<IUserFollowingWriteRepository, UserFollowingWriteRepository>();
+
+          services.AddScoped<IActivityAttendeeReadRepository, ActivityAttendeeReadRepository>();
+          services.AddScoped<IActivityAttendeeWriteRepository, ActivityAttendeeWriteRepository>();
 
           #endregion
 
@@ -75,14 +87,19 @@ public static class InfrastructureServicesRegistration
                          ValidateLifetime = true,
                          ClockSkew = TimeSpan.Zero
                     };
+                    // SignalR
                     options.Events = new JwtBearerEvents
                     {
                          OnMessageReceived = context =>
                          {
                               var accessToken = context.Request.Query["access_token"];
+
+                              // If the request is for our hub...
                               var path = context.HttpContext.Request.Path;
-                              if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+                              if (!string.IsNullOrEmpty(accessToken) &&
+                                  (path.StartsWithSegments("/chat")))
                               {
+                                   // Read the token out of the query string
                                    context.Token = accessToken;
                               }
                               return Task.CompletedTask;

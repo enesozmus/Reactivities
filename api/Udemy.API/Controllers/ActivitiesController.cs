@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Udemy.Application.Features.ActivitiesOperations;
+using Udemy.Application.Results;
 
 namespace Udemy.API.Controllers;
 
@@ -8,7 +9,7 @@ public class ActivitiesController : BaseController
 {
      [AllowAnonymous]
      [HttpGet]
-     public async Task<IActionResult> GetActivities() => HandleResult(await Mediator.Send(new GetActivitiesQueryRequest()));
+     public async Task<IActionResult> GetActivities([FromQuery]ActivityParams request) => HandlePagedResult(await Mediator.Send(new GetActivitiesQueryRequest { Params = request}));
 
      [AllowAnonymous]
      [HttpGet("{id}")]

@@ -29,7 +29,8 @@ public class EditProfilesQueryHandler : IRequestHandler<EditProfilesQueryRequest
                .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
           user.Bio = request.Bio ?? user.Bio;
-          user.DisplayName = request.DisplayName ?? user.DisplayName;
+          user.FirstName = request.FirstName ?? user.FirstName;
+          user.LastName = request.LastName ?? user.LastName;
 
           await _writeRepository.SaveAsync();
           return Result<Unit>.Success(Unit.Value);

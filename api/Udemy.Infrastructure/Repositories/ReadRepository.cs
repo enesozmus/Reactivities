@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 using Udemy.Application.IRepositories;
 using Udemy.Domain.Entities;
@@ -84,6 +85,12 @@ public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
      public virtual async Task<int> CountAsync() => await _context.Set<T>().CountAsync();
 
      public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicate = null) => await _context.Set<T>().CountAsync(predicate);
+
+     public async Task<T> GetForMultipleKeys(params object[] keyValues)
+     {
+          var test = await _context.Set<T>().FindAsync(keyValues);
+          return test;
+     }
 
      #endregion
 }

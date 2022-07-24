@@ -16,6 +16,8 @@ public class ApplicationContext : IdentityDbContext<AppUser, AppRole, Guid>
      public DbSet<Photo> Photos { get; set; }
      public DbSet<Comment> Comments { get; set; }
 
+     public DbSet<UserFollowing> UserFollowings { get; set; }
+
      #endregion
 
      #region Customized SaveChangesAsync
@@ -47,6 +49,7 @@ public class ApplicationContext : IdentityDbContext<AppUser, AppRole, Guid>
           modelBuilder.ApplyConfiguration(new AppUserConfiguration());
           modelBuilder.ApplyConfiguration(new ActivityConfiguration());
           modelBuilder.ApplyConfiguration(new PhotoConfiguration());
+          modelBuilder.ApplyConfiguration(new CommentConfiguration());
 
           #region many to many
 
@@ -61,6 +64,22 @@ public class ApplicationContext : IdentityDbContext<AppUser, AppRole, Guid>
               .HasOne(u => u.Activity)
               .WithMany(a => a.Attendees)
               .HasForeignKey(aa => aa.ActivityId);
+
+          modelBuilder.Entity<UserFollowing>(b =>
+          {
+               b.HasKey(k => new { k.ObserverId, k.TargetId });
+
+               b.HasOne(o => o.Observer)
+                   .WithMany(f => f.Followings)
+                   .HasForeignKey(o => o.ObserverId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+               b.HasOne(o => o.Target)
+                   .WithMany(f => f.Followers)
+                   .HasForeignKey(o => o.TargetId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+          });
 
           #endregion
 

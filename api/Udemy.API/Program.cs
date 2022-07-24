@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using Udemy.API.Middleware;
+using Udemy.API.SignalR;
 using Udemy.Application;
 using Udemy.Infrastructure;
 using Udemy.Infrastructure.SeedData;
@@ -13,10 +14,11 @@ builder.Services.ConfigureApplicationServices();
 
 #endregion
 
-
-//builder.Services.AddControllers();
+builder.Services.AddSignalR(options =>
+{
+     options.EnableDetailedErrors = true;
+});
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 #region Swagger
 
@@ -100,5 +102,6 @@ app.UseAuthorization();
 #endregion
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chat");
 
 app.Run();

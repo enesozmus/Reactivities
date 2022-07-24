@@ -1,6 +1,6 @@
 ﻿using Udemy.Application.Features.AuthenticationOperations;
 
-namespace Udemy.Application.Test;
+namespace Udemy.Application.Interfaces;
 
 public interface IAuthentication
 {
