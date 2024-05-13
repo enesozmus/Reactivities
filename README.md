@@ -38,7 +38,7 @@
   </details>
 
 ## ASP.NET Core WEB API & React 18
-[Neil Cummings'in](https://www.udemy.com/user/neil-cummings-2/) `"Complete guide to building an app with .Net Core and React"` Udemy Kursu takip edilerek geliştirilen Web Uygulaması
+[Neil Cummings'in](https://www.udemy.com/user/neil-cummings-2/) `"Complete guide to building an app with .Net Core and React"` kursu takip edilerek geliştirilen Web Uygulaması
 
 
 <img src="https://github.com/enesozmus/Reactivities/blob/master/preview/asset01.png" alt="Swagger" title="Swagger">
